@@ -7,6 +7,8 @@ terraform {
   }
 }
 
+
+
 # Optional KMS key
 resource "aws_kms_key" "this" {
   count                   = var.create_kms_key && !var.use_existing_kms_key ? 1 : 0

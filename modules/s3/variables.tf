@@ -68,3 +68,4 @@ variable "sse_algorithm" {
   description = "Server-side encryption algorithm"
   default     = "aws:kms"
 }
+
