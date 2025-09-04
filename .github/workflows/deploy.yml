@@ -40,10 +40,14 @@ jobs:
         run: terraform state rm module.app_bucket.aws_kms_key.this[0]
         working-directory: ${{ env.WORKING_DIR }}
 
+      - name: Terraform State refresh
+        run: terraform apply -refresh-only -auto-approve
+        working-directory: ${{ env.WORKING_DIR }}
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan 
         working-directory: ${{ env.WORKING_DIR }}

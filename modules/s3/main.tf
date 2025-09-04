@@ -47,6 +47,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
 
   depends_on = [
     aws_s3_bucket.this,
-    aws_kms_key.this
+    # aws_kms_key.this
   ]
 }
