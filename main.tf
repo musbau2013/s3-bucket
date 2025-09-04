@@ -1,8 +1,6 @@
-data "aws_kms_key" "existing" {
-  key_id = "6a5d782f-bc5b-425e-9fe6-0dd08e065eb3"
-}
-
-
+# data "aws_kms_key" "existing" {
+#   key_id = "6a5d782f-bc5b-425e-9fe6-0dd08e065eb3"
+# }
 
 module "app_bucket" {
   source = "./modules/s3"
@@ -11,7 +9,7 @@ module "app_bucket" {
   create_kms_key       = true
   use_existing_kms_key = false
 
-  kms_key_id = data.aws_kms_key.existing.arn
+  # kms_key_id = data.aws_kms_key.existing.arn
 
   tags = {
     Environment = "prod"
