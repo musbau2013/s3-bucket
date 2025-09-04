@@ -36,14 +36,14 @@ jobs:
         run: terraform init
         working-directory: ${{ env.WORKING_DIR }}
 
-      # - name: Remove KMS Key from Terraform State
-      #   run: terraform state rm aws_kms_key.my_key
+      - name: Remove KMS Key from Terraform State
+        run: terraform state rm aws_kms_key.my_key
+        working-directory: ${{ env.WORKING_DIR }}
+
+      # - name: Terraform Plan
+      #   run: terraform plan -out=tfplan
       #   working-directory: ${{ env.WORKING_DIR }}
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-        working-directory: ${{ env.WORKING_DIR }}
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
-        working-directory: ${{ env.WORKING_DIR }}
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve tfplan
+      #   working-directory: ${{ env.WORKING_DIR }}
