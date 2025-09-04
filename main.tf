@@ -1,7 +1,7 @@
 module "app_bucket" {
   source = "./modules/s3"
 
-  bucket_name          = "tweakideaz-intl"
+  bucket_name          = "tweakideaz-intl-dev-x4y7zq"
   create_kms_key       = true
   use_existing_kms_key = false
   tags = {
