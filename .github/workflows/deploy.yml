@@ -8,6 +8,11 @@ on:
 env:
   WORKING_DIR: "."
 
+permissions:
+  id-token: write
+  contents: read
+
+
 jobs:
   terraform-state-update:
     runs-on: ubuntu-latest
