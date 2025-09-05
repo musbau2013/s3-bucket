@@ -41,7 +41,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm     = "aws:kms" #var.sse_algorithm
-      kms_master_key_id = var.use_existing_kms_key ? var.kms_key_id : aws_kms_key.this[0].arn
+      kms_master_key_id = var.use_existing_kms_key ? var.kms_key_id : aws_kms_key.this.arn
     }
   }
 
