@@ -37,7 +37,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: Remove KMS Key from Terraform State
-        run: terraform state rm module.app_bucket.aws_kms_key.this[0]
+        run: terraform state rm module.app_bucket.aws_kms_key.this
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: Terraform State refresh
