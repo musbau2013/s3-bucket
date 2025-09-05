@@ -35,17 +35,33 @@ resource "aws_s3_bucket_public_access_block" "this" {
 }
 
 # Server-side encryption configuration
+# resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
+#   bucket = aws_s3_bucket.this.id
+
+#   rule {
+#     apply_server_side_encryption_by_default {
+#       sse_algorithm     = "aws:kms" #var.sse_algorithm
+#       kms_master_key_id = var.use_existing_kms_key ? var.kms_key_id : aws_kms_key.this[0].arn
+#     }
+#   }
+
+#   depends_on = [
+#     aws_s3_bucket.this,
+#     # aws_kms_key.this
+#   ]
+# }
+
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   bucket = aws_s3_bucket.this.id
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = "aws:kms" #var.sse_algorithm
-      kms_master_key_id = var.use_existing_kms_key ? var.kms_key_id : aws_kms_key.this[0].arn
+      sse_algorithm     = var.use_existing_kms_key || var.create_kms_key ? "aws:kms" : "AES256"
+      kms_master_key_id = var.use_existing_kms_key ? var.kms_key_id : (var.create_kms_key ? aws_kms_key.this[0].arn : null)
     }
+  
   }
-
-  depends_on = [
+    depends_on = [
     aws_s3_bucket.this,
     # aws_kms_key.this
   ]
