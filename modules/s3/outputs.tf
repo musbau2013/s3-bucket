@@ -7,6 +7,6 @@ output "bucket_name" {
 }
 
 output "kms_key_arn" {
-  value       = var.use_existing_kms_key ? var.kms_key_id : aws_kms_key.this[0].arn
+  value       = aws_kms_key.this.arn
   description = "KMS key ARN used for bucket encryption"
 }
