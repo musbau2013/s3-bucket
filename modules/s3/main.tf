@@ -34,22 +34,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
   depends_on = [aws_s3_bucket.this]
 }
 
-# Server-side encryption configuration
-# resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
-#   bucket = aws_s3_bucket.this.id
 
-#   rule {
-#     apply_server_side_encryption_by_default {
-#       sse_algorithm     = "aws:kms" #var.sse_algorithm
-#       kms_master_key_id = var.use_existing_kms_key ? var.kms_key_id : aws_kms_key.this[0].arn
-#     }
-#   }
-
-#   depends_on = [
-#     aws_s3_bucket.this,
-#     # aws_kms_key.this
-#   ]
-# }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   bucket = aws_s3_bucket.this.id
