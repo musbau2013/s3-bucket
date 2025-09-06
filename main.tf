@@ -1,15 +1,15 @@
-# data "aws_kms_key" "existing" {
-#   key_id = "3e54b4d6-a534-4ba3-a3eb-d75c855a176e"
-# }
+data "aws_kms_key" "existing" {
+  key_id = "14c95555-8150-4d89-b6a2-a7ef7974a13f"
+}
 
 module "app_bucket" {
   source = "./modules/s3"
   ### tst
   bucket_name          = "tweakideaz-intlweb"
-  create_kms_key       = true
-  use_existing_kms_key = false
+  create_kms_key       = false
+  use_existing_kms_key = true
 
-  # kms_key_id = data.aws_kms_key.existing.arn
+  kms_key_id = data.aws_kms_key.existing.arn
 
   tags = {
     Environment = "prod"
