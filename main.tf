@@ -6,8 +6,8 @@ module "app_bucket" {
   source = "./modules/s3"
   ### tst
   bucket_name          = "tweakideaz-intlweb"
-  create_kms_key       = false
-  use_existing_kms_key = true
+  create_kms_key       = true
+  use_existing_kms_key = false
 
   # kms_key_id = data.aws_kms_key.existing.arn
 
