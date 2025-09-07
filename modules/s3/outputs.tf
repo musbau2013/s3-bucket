@@ -12,3 +12,4 @@ output "kms_key_arn" {
 
   description = "KMS key ARN used for bucket encryption"
 }
+
