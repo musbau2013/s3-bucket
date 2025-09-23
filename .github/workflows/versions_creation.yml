@@ -1,65 +1,9 @@
-# name: Custom Versioning
-
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       version_type:
-#         description: 'Version Type'
-#         required: true
-#         default: 'bump'
-#         type: choice
-#         options:
-#         - bump
-#         - manual
-
-# jobs:
-#   tag-version:
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write
-    
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0 # Needed to get all tags
-      
-#       - name: Setup Python
-#         uses: actions/setup-python@v5
-#         with:
-#           python-version: '3.x'
-
-#       - name: Calculate Next Version
-#         id: calculate_version
-#         run: python version_script.py
-
-#       - name: Create and Push Tag
-#         env:
-#           NEW_TAG: ${{ steps.calculate_version.outputs.next_version }}
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         run: |
-#           git config user.name "github-actions[bot]"
-#           git config user.email "github-actions[bot]@users.noreply.github.com"
-#           echo "Creating tag $NEW_TAG"
-#           git tag -a $NEW_TAG -m "Release $NEW_TAG"
-#           git push origin $NEW_TAG
-
-name: Custom Versioning
+name: Auto Versioning
 
 on:
-  workflow_dispatch:
-    inputs:
-      version_type:
-        description: 'Version Type'
-        required: true
-        default: 'bump'
-        type: choice
-        options:
-        - bump
-        - manual
-      manual_version:
-        description: 'Manual version (only if version_type=manual)'
-        required: false
+  push:
+    branches:
+      - main
 
 jobs:
   tag-version:
@@ -71,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # full history and tags
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -80,9 +24,6 @@ jobs:
 
       - name: Calculate Next Version
         id: calculate_version
-        env:
-          VERSION_TYPE: ${{ github.event.inputs.version_type }}
-          MANUAL_VERSION: ${{ github.event.inputs.manual_version }}
         run: python version_script.py
 
       - name: Create and Push Tag
