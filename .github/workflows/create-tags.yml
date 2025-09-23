@@ -1,0 +1,45 @@
+name: create tags by auto
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Calculate Next Version
+        id: calculate_version
+        run: python version_script.py
+
+      - name: Create and Push Tag
+        if: steps.calculate_version.outputs.next_version != ''
+        env:
+          NEW_TAG: ${{ steps.calculate_version.outputs.next_version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 || echo "")
+          if [ "$NEW_TAG" = "$LATEST_TAG" ]; then
+            echo "No new version needed. Skipping tag."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "Creating tag $NEW_TAG"
+          git tag -a $NEW_TAG -m "Release $NEW_TAG"
+          git push origin $NEW_TAG
