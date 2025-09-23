@@ -24,23 +24,23 @@ module "app_bucket" {
 }
 
 
-# module "static_website_bucket" {
-#   source = "./modules/s3"
-#   ### tst adsfddvdvddfsgfsgfsgsgdgfdgfg
-#   bucket_name          = "static-website-intlweb"
-#   create_kms_key       = false
-#   use_existing_kms_key = true
+module "static_website_bucket" {
+  source = "./modules/s3"
+  ### tst adsfddvdvddfsgfsgfsgsgdgfdgfg
+  bucket_name          = "static-website-intlweb"
+  create_kms_key       = false
+  use_existing_kms_key = true
 
-#   kms_key_id = data.aws_kms_key.existing.arn
+  kms_key_id = data.aws_kms_key.existing.arn
 
-#   tags = {
-#     Environment = "prod"
-#     Project     = "my-app"
-#   }
+  tags = {
+    Environment = "prod"
+    Project     = "my-app"
+  }
   
-#   block_public_acls       = true
-#   block_public_policy     = true
-#   ignore_public_acls      = true
-#   restrict_public_buckets = true
-#   sse_algorithm           = "aws:kms"
-# }
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+  sse_algorithm           = "aws:kms"
+}
