@@ -1,4 +1,4 @@
-name: Auto Versioning on push
+name: Auto Versioning on pr
 
 on:
   push:
