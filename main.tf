@@ -39,8 +39,8 @@ module "static_website_bucket" {
   }
   
   block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+  # block_public_policy     = false
+  # ignore_public_acls      = true
+  # restrict_public_buckets = true
   sse_algorithm           = "aws:kms"
 }
