@@ -1,53 +1,53 @@
-name: Terraform State Cleanup & Apply
+# name: Terraform State Cleanup & Apply
 
-on:
-  push:
-    branches:
-      - master  # #####Adjust to your target branch
+# on:
+#   push:
+#     branches:
+#       - master  # #####Adjust to your target branch
 
-env:
-  WORKING_DIR: "."
+# env:
+#   WORKING_DIR: "."
 
-permissions:
-  id-token: write
-  contents: read
+# permissions:
+#   id-token: write
+#   contents: read
 
 
-jobs:
-  terraform-state-update:
-    runs-on: ubuntu-latest
+# jobs:
+#   terraform-state-update:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.8.5
+#       - name: Setup Terraform
+#         uses: hashicorp/setup-terraform@v2
+#         with:
+#           terraform_version: 1.8.5
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: us-east-1
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v4
+#         with:
+#           role-to-assume: ${{ secrets.AWS_ROLE }}
+#           aws-region: us-east-1
 
-      - name: Initialize Terraform
-        run: terraform init
-        working-directory: ${{ env.WORKING_DIR }}
+#       - name: Initialize Terraform
+#         run: terraform init
+#         working-directory: ${{ env.WORKING_DIR }}
 
-      # - name: Remove KMS Key from Terraform State
-      #   run: terraform state rm module.app_bucket.aws_kms_key.this
-      #   working-directory: ${{ env.WORKING_DIR }}
+#       # - name: Remove KMS Key from Terraform State
+#       #   run: terraform state rm module.app_bucket.aws_kms_key.this
+#       #   working-directory: ${{ env.WORKING_DIR }}
 
-      - name: Terraform State refresh
-        run: terraform apply -refresh-only -auto-approve
-        working-directory: ${{ env.WORKING_DIR }}
+#       - name: Terraform State refresh
+#         run: terraform apply -refresh-only -auto-approve
+#         working-directory: ${{ env.WORKING_DIR }}
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-        working-directory: ${{ env.WORKING_DIR }}
+#       - name: Terraform Plan
+#         run: terraform plan -out=tfplan
+#         working-directory: ${{ env.WORKING_DIR }}
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan 
-        working-directory: ${{ env.WORKING_DIR }}
+#       - name: Terraform Apply
+#         run: terraform apply -auto-approve tfplan 
+#         working-directory: ${{ env.WORKING_DIR }}
